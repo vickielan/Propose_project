@@ -1,0 +1,308 @@
+---
+title: "WIDS_project"
+author: "Baiying Lu"
+date: "1/24/2020"
+output: html_document
+---
+```{r}
+training <- read.csv("/Users/lubaiying/Desktop/WiDS/widsdatathon2020/training_v2.csv", header = TRUE, sep = ",")
+```
+
+
+```{r}
+compare<-read.csv("/Users/lubaiying/Desktop/WiDS/widsdatathon2020/training_v2.csv", header = TRUE, sep = ",")
+```
+
+```{r}
+summary(compare$ethnicity)
+```
+```{r}
+training$apache_2_bodysystem <- as.character(training$apache_2_bodysystem)
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="")] <- "0"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Cardiovascular")] <- "1"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Gastrointestinal")] <- "2"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Haematologic")] <- "3"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Metabolic")] <- "4"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Neurologic")] <-"5"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Renal/Genitourinary")] <-"6"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Respiratory")] <- "7"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Trauma")] <- "8"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Undefined diagnoses")] <- "9"
+training$apache_2_bodysystem[which(training$apache_2_bodysystem=="Undefined Diagnoses")] <- "9"
+training$apache_2_bodysystem <- as.numeric(training$apache_2_bodysystem)
+```
+
+```{r}
+training$apache_3j_bodysystem <- as.character(training$apache_3j_bodysystem)
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="")] <- "0"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Cardiovascular")] <- "1"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Gastrointestinal")] <- "2"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Genitourinary")] <- "3"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Gynecological")] <- "4"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Hematological")] <- "5"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Metabolic")] <- "6"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Musculoskeletal/Skin")] <- "7"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Neurological")] <-"8"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Respiratory")] <- "9"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Sepsis")] <- "10"
+training$apache_3j_bodysystem[which(training$apache_3j_bodysystem=="Trauma")] <- "11"
+training$apache_3j_bodysystem <- as.numeric(training$apache_3j_bodysystem)
+```
+
+```{r}
+training$icu_type <- as.character(training$icu_type)
+training$icu_type[which(training$icu_type=="Cardiac ICU")] <- "0"
+training$icu_type[which(training$icu_type=="CCU-CTICU")] <- "1"
+training$icu_type[which(training$icu_type=="CSICU")] <- "2"
+training$icu_type[which(training$icu_type=="CTICU")] <- "3"
+training$icu_type[which(training$icu_type=="Med-Surg ICU")] <- "4"
+training$icu_type[which(training$icu_type=="MICU")] <- "5"
+training$icu_type[which(training$icu_type=="Neuro ICU")] <- "6"
+training$icu_type[which(training$icu_type=="SICU")] <- "7"
+training$icu_type <- as.numeric(training$icu_type)
+```
+
+```{r}
+training$icu_stay_type <- as.character(training$icu_stay_type)
+training$icu_stay_type[which(training$icu_stay_type=="admit")] <- "0"
+training$icu_stay_type[which(training$icu_stay_type=="readmit")] <- "1"
+training$icu_stay_type[which(training$icu_stay_type=="transfer")] <- "2"
+training$icu_stay_type <- as.numeric(training$icu_stay_type)
+```
+
+```{r}
+training$icu_admit_source <- as.character(training$icu_admit_source)
+training$icu_admit_source[which(training$icu_admit_source=="")] <- "0"
+training$icu_admit_source[which(training$icu_admit_source=="Accident & Emergency")] <- "1"
+training$icu_admit_source[which(training$icu_admit_source=="Floor")] <- "2"
+training$icu_admit_source[which(training$icu_admit_source=="Other Hospital")] <- "3"
+training$icu_admit_source[which(training$icu_admit_source=="Other ICU")] <- "4"
+training$icu_admit_source[which(training$icu_admit_source=="Operating Room / Recovery")] <- "5"
+#training$icu_admit_source[which(training$icu_admit_source==NA)] <- "6"
+training$icu_admit_source <- as.numeric(training$icu_admit_source)
+```
+
+```{r}
+training$hospital_admit_source <- as.character(training$hospital_admit_source)
+training$hospital_admit_source[which(training$hospital_admit_source=="")] <- "0"
+training$hospital_admit_source[which(training$hospital_admit_source=="Acute Care/Floor")] <- "1"
+training$hospital_admit_source[which(training$hospital_admit_source=="Chest Pain Center")] <- "2"
+training$hospital_admit_source[which(training$hospital_admit_source=="Direct Admit")] <- "3"
+training$hospital_admit_source[which(training$hospital_admit_source=="Emergency Department")] <- "4"
+training$hospital_admit_source[which(training$hospital_admit_source=="Floor")] <- "5"
+training$hospital_admit_source[which(training$hospital_admit_source=="ICU")] <- "6"
+training$hospital_admit_source[which(training$hospital_admit_source=="ICU to SDU")] <- "7"
+training$hospital_admit_source[which(training$hospital_admit_source=="Observation")] <- "8"
+training$hospital_admit_source[which(training$hospital_admit_source=="Operating Room")] <- "8"
+training$hospital_admit_source[which(training$hospital_admit_source=="Other")] <- "10"
+training$hospital_admit_source[which(training$hospital_admit_source=="Other Hospital")] <- "11"
+training$hospital_admit_source[which(training$hospital_admit_source=="Other ICU")] <- "12"
+training$hospital_admit_source[which(training$hospital_admit_source=="PACU")] <- "13"
+training$hospital_admit_source[which(training$hospital_admit_source=="Recovery Room")] <- "14"
+training$hospital_admit_source[which(training$hospital_admit_source=="Step-Down Unit (SDU)")] <- "15"
+training$hospital_admit_source <- as.numeric(training$hospital_admit_source)
+```
+
+```{r}
+training$gender <- as.character(training$gender)
+training$gender[which(training$gender=="F")] <- "0"
+training$gender[which(training$gender=="M")] <- "1"
+training$gender <- as.numeric(training$gender)
+```
+
+```{r}
+training$ethnicity <- as.character(training$ethnicity)
+training$ethnicity[which(training$ethnicity=="")] <- "0"
+training$ethnicity[which(training$ethnicity=="African American")] <- "1"
+training$ethnicity[which(training$ethnicity=="Asian")] <- "2"
+training$ethnicity[which(training$ethnicity=="Caucasian")] <- "3"
+training$ethnicity[which(training$ethnicity=="Hispanic")] <- "4"
+training$ethnicity[which(training$ethnicity=="Native American")] <- "5"
+training$ethnicity[which(training$ethnicity=="Other/Unknown")] <- "6"
+#training$ethnicity[is.na(training$ethnicity)]<-"7"
+training$ethnicity <- as.numeric(training$ethnicity)
+```
+```{r}
+summary(compare$ethnicity)
+```
+
+```{r}
+tr = lapply(training, as.character)
+tr = lapply(tr, as.numeric)
+tr = as.data.frame(tr)
+
+```
+
+```{r}
+library(magrittr) 
+library(dplyr) 
+library(ggplot2)
+library(tidyr)
+library(scorecard)
+require(stats)
+require(graphics)
+```
+
+
+```{r}
+df_copy <- tr
+df_copy[2:186]<-replace(data.frame(lapply(df_copy[2:186], as.character), stringsAsFactors = FALSE), !is.na(df_copy[2:186]), 1)
+df_copy[is.na(df_copy)]=0
+```
+
+
+```{r}
+df_f <- merge(tr,df_copy,by="encounter_id")
+df_final <- subset(df_f, select = -c(patient_id.y,hospital_id.y, hospital_death.y, icu_id.y))
+
+```
+
+```{r}
+df_final_1 <- subset(df_final, select = -c(ethnicity.x, gender.x, hospital_admit_source.x,icu_admit_source.x,icu_stay_type.x,icu_type.x,readmission_status.x,apache_2_diagnosis.x,apache_3j_diagnosis.x,apache_post_operative.x,arf_apache.x,gcs_eyes_apache.x,gcs_motor_apache.x,gcs_unable_apache.x,gcs_verbal_apache.x,intubated_apache.x,ventilated_apache.x,aids.x,cirrhosis.x,diabetes_mellitus.x,hepatic_failure.x,immunosuppression.x,leukemia.x,lymphoma.x,solid_tumor_with_metastasis.x,apache_3j_bodysystem.x,apache_2_bodysystem.x,elective_surgery.x,ethnicity.y, gender.y, hospital_admit_source.y,icu_admit_source.y,icu_stay_type.y,icu_type.y,readmission_status.y,apache_2_diagnosis.y,apache_3j_diagnosis.y,apache_post_operative.y,arf_apache.y,gcs_eyes_apache.y,gcs_motor_apache.y,gcs_unable_apache.y,gcs_verbal_apache.y,intubated_apache.y,ventilated_apache.y,aids.y,cirrhosis.y,diabetes_mellitus.y,hepatic_failure.y,immunosuppression.y,leukemia.y,lymphoma.y,solid_tumor_with_metastasis.y,apache_3j_bodysystem.y,apache_2_bodysystem.y,elective_surgery.y))
+
+```
+
+
+```{r}
+library(imputeMissings)
+f=function(x){
+   x<-as.numeric(as.character(x)) 
+   x[is.na(x)] =median(x, na.rm=TRUE)
+   x 
+}
+df_final1_imp=data.frame(apply(df_final_1,2,f))
+```
+
+```{r}
+apply(df_final1_imp, 2, function(x) any(is.na(x)))
+```
+
+```{r}
+df_final_2 <- subset(df_final,select= c(encounter_id,ethnicity.x, gender.x, hospital_admit_source.x,icu_admit_source.x,icu_stay_type.x,icu_type.x,readmission_status.x,apache_2_diagnosis.x,apache_3j_diagnosis.x,apache_post_operative.x,arf_apache.x,gcs_eyes_apache.x,gcs_motor_apache.x,gcs_unable_apache.x,gcs_verbal_apache.x,intubated_apache.x,ventilated_apache.x,aids.x,cirrhosis.x,diabetes_mellitus.x,hepatic_failure.x,immunosuppression.x,leukemia.x,lymphoma.x,solid_tumor_with_metastasis.x,apache_3j_bodysystem.x,apache_2_bodysystem.x,elective_surgery.x,ethnicity.y, gender.y, hospital_admit_source.y,icu_admit_source.y,icu_stay_type.y,icu_type.y,readmission_status.y,apache_2_diagnosis.y,apache_3j_diagnosis.y,apache_post_operative.y,arf_apache.y,gcs_eyes_apache.y,gcs_motor_apache.y,gcs_unable_apache.y,gcs_verbal_apache.y,intubated_apache.y,ventilated_apache.y,aids.y,cirrhosis.y,diabetes_mellitus.y,hepatic_failure.y,immunosuppression.y,leukemia.y,lymphoma.y,solid_tumor_with_metastasis.y,apache_3j_bodysystem.y,apache_2_bodysystem.y,elective_surgery.y))
+```
+
+```{r}
+Mode <- function (x, na.rm) {
+    xtab <- table(x)
+    xmode <- names(which(xtab == max(xtab)))
+    if (length(xmode) > 1)
+        xmode <- ">1 mode"
+    return(xmode)
+}
+f1=function(y){
+   y<-as.numeric(as.character(y)) 
+   y[is.na(y)] =Mode(y, na.rm=TRUE)
+   y 
+}
+df_final2_imp=data.frame(apply(df_final_2,2,f1))
+```
+
+```{r}
+apply(df_final2_imp, 2, function(x) any(is.na(x)))
+```
+
+```{r}
+df_imputed <- merge(df_final1_imp,df_final2_imp,by="encounter_id")
+```
+
+```{r}
+# Split the data into training and test set
+n <- nrow(df_imputed)  # Number of observations
+ ntrain <- round(n*0.80)  # 80% for training set
+ set.seed(123)    # Set seed for reproducible results
+ tindex <- sample(n, ntrain)   # Create a random index
+x_train <- df_imputed[tindex,]   # Create training set
+x_test <- df_imputed[-tindex,]   # Create test set
+x_train = lapply(x_train, as.character)
+x_train = lapply(x_train, as.numeric)
+x_train = as.data.frame(x_train)
+x_test = lapply(x_test, as.character)
+x_test = lapply(x_test, as.numeric)
+x_test = as.data.frame(x_test)
+
+#lasso
+#library(glmnet)
+#x_vars <- model.matrix(hospital_death.x~. ,x_train)[,-1]
+#y_var <- x_train$hospital_death.x
+#lambda_seq <- 10^seq(2, -2, by = -.1)
+
+
+# Splitting the data into test and train
+#set.seed(86)
+#train = sample(1:nrow(x_vars), nrow(x_vars)/2)
+#x_test = (-train)
+#y_test = y_var[x_test]
+
+#cv_output <- cv.glmnet(x_vars[train,], y_var[train], 
+#            alpha = 1, lambda = lambda_seq)
+
+# identifying best lamda
+#best_lam <- cv_output$lambda.min
+
+
+#lasso_best <- glmnet(x_vars[train,], y_var[train], alpha = 1, lambda = best_lam)
+#coef(lasso_best)
+
+#tmp_coeffs <- coef(lasso_best, s = "lambda.min")
+#coefficient <- data.frame(name = tmp_coeffs@Dimnames[[1]][tmp_coeffs@i + 1], coefficient = tmp_coeffs@x)
+#coefficient<-as.data.frame(t(coefficient))
+#colnames(coefficient) <- as.character(unlist(coefficient[1,]))
+#coefficient = coefficient[-1, ]
+
+#coefficient = subset(coefficient,select = c(age.x,	pre_icu_los_days.x,	fio2_apache.x,	d1_heartrate_max.x,	d1_mbp_min.x,	d1_spo2_min.x,	d1_sysbp_min.x,	d1_sysbp_noninvasive_min.x,	d1_temp_min.x,	h1_resprate_min.x,	d1_albumin_min.x,	d1_bilirubin_max.x,	d1_bun_min.x,	d1_inr_max.x,	d1_inr_min.x,	d1_lactate_max.x,	d1_lactate_min.x,	d1_wbc_min.x,	h1_inr_max.x,	h1_inr_min.x,	d1_arterial_ph_min.x,	d1_pao2fio2ratio_min.x,	apache_4a_hospital_death_prob.x	,age.y,	resprate_apache.y,	temp_apache.y,	wbc_apache.y,	d1_potassium_max.y,	d1_arterial_ph_max.y,	d1_arterial_po2_max.y,	d1_arterial_po2_min.y,	apache_3j_diagnosis.x,	gcs_eyes_apache.x,	gcs_motor_apache.x,	ventilated_apache.x,	elective_surgery.x,	gcs_eyes_apache.y))
+#shrink <- subset(x_train,select= c(age.x,	pre_icu_los_days.x,	fio2_apache.x,	d1_heartrate_max.x,	d1_mbp_min.x,	d1_spo2_min.x,	d1_sysbp_min.x,	d1_sysbp_noninvasive_min.x,	d1_temp_min.x,	h1_resprate_min.x,	d1_albumin_min.x,	d1_bilirubin_max.x,	d1_bun_min.x,	d1_inr_max.x,	d1_inr_min.x,	d1_lactate_max.x,	d1_lactate_min.x,	d1_wbc_min.x,	h1_inr_max.x,	h1_inr_min.x,	d1_arterial_ph_min.x,	d1_pao2fio2ratio_min.x,	apache_4a_hospital_death_prob.x	,age.y,	resprate_apache.y,	temp_apache.y,	wbc_apache.y,	d1_potassium_max.y,	d1_arterial_ph_max.y,	d1_arterial_po2_max.y,	d1_arterial_po2_min.y,	apache_3j_diagnosis.x,	gcs_eyes_apache.x,	gcs_motor_apache.x,	ventilated_apache.x,	elective_surgery.x,	gcs_eyes_apache.y))
+
+# for (val in 1:73370){
+# shrinked_data <- shrink[val,]*coefficient[1,]
+# }
+# Build the logistic model
+model <- glm(hospital_death.x ~.-encounter_id-patient_id.x-hospital_id.x,family=binomial(link='logit'),data=x_train)
+
+# Make predictions and compute the R2, RMSE and MAE
+fitted.results <- predict(model,x_test)
+prediction = as.data.frame(fitted.results)
+#fitted.results <- ifelse(fitted.results > 0,1,0)
+fitted.results <- as.data.frame(fitted.results)
+
+fitted.results$real <- x_test$hospital_death.x
+mean(fitted.results$real == fitted.results$fitted.results)
+xtab <- table(fitted.results$real, fitted.results$fitted.results)
+xtab
+
+simple_roc <- function(labels, scores){
+  labels <- labels[order(scores, decreasing=TRUE)]
+  data.frame(TPR=cumsum(labels)/sum(labels), FPR=cumsum(!labels)/sum(!labels), labels)
+}
+
+library(pROC)
+pROC_obj <- roc(fitted.results$real,fitted.results$fitted.results,
+            smoothed = TRUE,
+            # arguments for ci
+            ci=TRUE, ci.alpha=0.9, stratified=FALSE,
+            # arguments for plot
+            plot=TRUE, auc.polygon=TRUE, max.auc.polygon=TRUE, grid=TRUE,
+            print.auc=TRUE, show.thres=TRUE)
+
+
+sens.ci <- ci.se(pROC_obj)
+plot(sens.ci, type="shape", col="lightblue")
+
+
+
+
+
+
+
+#plot(roc(fitted.results$real, fitted.results$fitted.results, direction="<"),
+ #    col="yellow", lwd=3, main="The ROC of hospital death")
+#glm_simple_roc <- simple_roc(fitted.results$real=="TRUE", fitted.results$fitted.results)
+#with(glm_simple_roc, points(1 - FPR, TPR, col=1 + labels))
+#misClasificError <- mean(fitted.results != test$Survived)
+#print(paste('Accuracy',1-misClasificError))
+
+#pred_data <- predict.glm(model, x_test)
+#data.frame( R2 = R2(predictions, test.data$hospital_death.x),
+            #RMSE = RMSE(predictions, test.data$hospital_death.x),
+            #MAE = MAE(predictions, test.data$hospital_death.x))
+```
+
