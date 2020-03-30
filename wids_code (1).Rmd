@@ -1,6 +1,6 @@
 ---
 title: "WIDS_project"
-author: "Baiying Lu"
+author: "Geetika Singh, Baiying Lu, Sumin Lan"
 date: "1/24/2020"
 output: html_document
 ---
