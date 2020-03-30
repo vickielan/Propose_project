@@ -5,12 +5,12 @@ date: "1/24/2020"
 output: html_document
 ---
 ```{r}
-training <- read.csv("/Users/lubaiying/Desktop/WiDS/widsdatathon2020/training_v2.csv", header = TRUE, sep = ",")
+training <- read.csv("/Users/qiqi/Desktop/Propose_project/training_v2.csv", header = TRUE, sep = ",")
 ```
 
 
 ```{r}
-compare<-read.csv("/Users/lubaiying/Desktop/WiDS/widsdatathon2020/training_v2.csv", header = TRUE, sep = ",")
+compare<-read.csv("/Users/qiqi/Desktop/Propose_project/training_v2.csv", header = TRUE, sep = ",")
 ```
 
 ```{r}
@@ -290,19 +290,5 @@ plot(sens.ci, type="shape", col="lightblue")
 
 
 
-
-
-
-#plot(roc(fitted.results$real, fitted.results$fitted.results, direction="<"),
- #    col="yellow", lwd=3, main="The ROC of hospital death")
-#glm_simple_roc <- simple_roc(fitted.results$real=="TRUE", fitted.results$fitted.results)
-#with(glm_simple_roc, points(1 - FPR, TPR, col=1 + labels))
-#misClasificError <- mean(fitted.results != test$Survived)
-#print(paste('Accuracy',1-misClasificError))
-
-#pred_data <- predict.glm(model, x_test)
-#data.frame( R2 = R2(predictions, test.data$hospital_death.x),
-            #RMSE = RMSE(predictions, test.data$hospital_death.x),
-            #MAE = MAE(predictions, test.data$hospital_death.x))
 ```
 
